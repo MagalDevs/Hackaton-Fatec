@@ -1,10 +1,11 @@
-import type { Event, Camera, Agent, Vehicle } from "./types"
+import type { Event, Camera, Agent, Vehicle } from "./types";
 
 export const mockEvents: Event[] = [
   {
     id: "1",
     name: "Festival de Música Centro",
-    description: "Grande festival de música com público estimado de 50 mil pessoas",
+    description:
+      "Grande festival de música com público estimado de 50 mil pessoas",
     location: "Praça Central",
     date: "2025-10-25",
     startTime: "18:00",
@@ -49,7 +50,8 @@ export const mockEvents: Event[] = [
   {
     id: "4",
     name: "Desfile Cívico",
-    description: "Desfile comemorativo com participação de escolas e instituições",
+    description:
+      "Desfile comemorativo com participação de escolas e instituições",
     location: "Avenida Principal",
     date: "2025-10-30",
     startTime: "09:00",
@@ -76,7 +78,7 @@ export const mockEvents: Event[] = [
     cameras: 20,
     vehicles: 15,
   },
-]
+];
 
 export const mockCameras: Camera[] = [
   {
@@ -85,6 +87,8 @@ export const mockCameras: Camera[] = [
     type: "drone",
     status: "online",
     location: { lat: -23.5505, lng: -46.6333 },
+    streamUrl:
+      "https://www.indaiatuba.sp.gov.br/comunicacao/imprensa/fotos/img_1159.jpg",
   },
   {
     id: "cam-2",
@@ -92,6 +96,8 @@ export const mockCameras: Camera[] = [
     type: "drone",
     status: "online",
     location: { lat: -23.5515, lng: -46.6343 },
+    streamUrl:
+      "https://www.kleberpatricio.com.br/wp-content/uploads/2016/10/14203312_1410961718932793_4783858100038371891_n.jpg",
   },
   {
     id: "cam-3",
@@ -99,6 +105,8 @@ export const mockCameras: Camera[] = [
     type: "street",
     status: "online",
     location: { lat: -23.55, lng: -46.633 },
+    streamUrl:
+      "https://gc.indaiatuba.sp.gov.br/images/img_top/cameracidada.jpg",
   },
   {
     id: "cam-4",
@@ -106,6 +114,8 @@ export const mockCameras: Camera[] = [
     type: "street",
     status: "online",
     location: { lat: -23.552, lng: -46.635 },
+    streamUrl:
+      "https://cotia.sp.gov.br/wp-content/uploads/2023/04/IMG_3246-scaled.jpg",
   },
   {
     id: "cam-5",
@@ -113,6 +123,8 @@ export const mockCameras: Camera[] = [
     type: "pole",
     status: "online",
     location: { lat: -23.5508, lng: -46.6335 },
+    streamUrl:
+      "https://static.wixstatic.com/media/82933f_e2bc7837daba4c9981e1845b1c042fc0~mv2.jpg/v1/fill/w_560,h_332,al_c,lg_1,q_80,enc_avif,quality_auto/82933f_e2bc7837daba4c9981e1845b1c042fc0~mv2.jpg",
   },
   {
     id: "cam-6",
@@ -120,8 +132,10 @@ export const mockCameras: Camera[] = [
     type: "pole",
     status: "online",
     location: { lat: -23.5512, lng: -46.634 },
+    streamUrl:
+      "https://www.santos.sp.gov.br/static/files_www/styles/newspagemodal/public/field/image/camera_tole_2.jpg",
   },
-]
+];
 
 export const mockAgents: Agent[] = [
   {
@@ -156,7 +170,7 @@ export const mockAgents: Agent[] = [
     location: { lat: -23.5508, lng: -46.6335 },
     lastUpdate: "2025-10-21T14:25:00",
   },
-]
+];
 
 export const mockVehicles: Vehicle[] = [
   {
@@ -186,4 +200,4 @@ export const mockVehicles: Vehicle[] = [
     assignedAgents: ["agent-5"],
     lastUpdate: "2025-10-21T14:29:00",
   },
-]
+];

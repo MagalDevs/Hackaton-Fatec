@@ -1,85 +1,97 @@
-"use client"
+"use client";
 
-import { useEffect, useRef, useState } from "react"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import type { Camera, Agent, Vehicle } from "@/lib/types"
-import { MapPin, Video, User, Car, Maximize2, Minimize2 } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { useLeaflet } from "@/hooks/use-leaflet"
+import { useEffect, useRef, useState } from "react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import type { Camera, Agent, Vehicle } from "@/lib/types";
+import { MapPin, Video, User, Car, Maximize2, Minimize2 } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { useLeaflet } from "@/hooks/use-leaflet";
 
 interface EventMapProps {
-  cameras: Camera[]
-  agents: Agent[]
-  vehicles: Vehicle[]
-  eventLocation: string
+  cameras: Camera[];
+  agents: Agent[];
+  vehicles: Vehicle[];
+  eventLocation: string;
 }
 
-export function EventMap({ cameras, agents, vehicles, eventLocation }: EventMapProps) {
-  const mapRef = useRef<HTMLDivElement>(null)
-  const [map, setMap] = useState<any>(null)
-  const [isFullscreen, setIsFullscreen] = useState(false)
-  const markersRef = useRef<any[]>([])
-  const { leaflet: L, isLoading } = useLeaflet()
+export function EventMap({
+  cameras,
+  agents,
+  vehicles,
+  eventLocation,
+}: EventMapProps) {
+  const mapRef = useRef<HTMLDivElement>(null);
+  const [map, setMap] = useState<any>(null);
+  const [isFullscreen, setIsFullscreen] = useState(false);
+  const markersRef = useRef<any[]>([]);
+  const { leaflet: L, isLoading } = useLeaflet();
 
   // Função para inicializar o mapa
   const initializeMap = () => {
-    if (!L || !mapRef.current || map) return
+    if (!L || !mapRef.current || map) return;
 
-    const safeCameras = cameras || []
-    const safeAgents = agents || []
-    const safeVehicles = vehicles || []
+    const safeCameras = cameras || [];
+    const safeAgents = agents || [];
+    const safeVehicles = vehicles || [];
 
     // Calculate center from all markers
     const allLocations = [
       ...safeCameras.map((c) => c.location),
       ...safeAgents.map((a) => a.location),
       ...safeVehicles.map((v) => v.location),
-    ]
+    ];
 
     const centerLat =
-      allLocations.length > 0 ? allLocations.reduce((sum, loc) => sum + loc.lat, 0) / allLocations.length : -23.5505
+      allLocations.length > 0
+        ? allLocations.reduce((sum, loc) => sum + loc.lat, 0) /
+          allLocations.length
+        : -23.5505;
     const centerLng =
-      allLocations.length > 0 ? allLocations.reduce((sum, loc) => sum + loc.lng, 0) / allLocations.length : -46.6333
+      allLocations.length > 0
+        ? allLocations.reduce((sum, loc) => sum + loc.lng, 0) /
+          allLocations.length
+        : -46.6333;
 
     const mapInstance = L.map(mapRef.current, {
       center: [centerLat, centerLng],
       zoom: allLocations.length > 0 ? 14 : 12,
       zoomControl: true,
-    })
+    });
 
     L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+      attribution:
+        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
       maxZoom: 19,
-    }).addTo(mapInstance)
+    }).addTo(mapInstance);
 
-    setMap(mapInstance)
+    setMap(mapInstance);
 
-    return mapInstance
-  }
+    return mapInstance;
+  };
 
   // Efeito para inicializar o mapa
   useEffect(() => {
-    const mapInstance = initializeMap()
+    const mapInstance = initializeMap();
 
     return () => {
       if (mapInstance) {
-        mapInstance.remove()
+        mapInstance.remove();
       }
-    }
-  }, [L]) // Removemos as dependências desnecessárias
+    };
+  }, [L]); // Removemos as dependências desnecessárias
 
   // Efeito para adicionar/atualizar marcadores
   useEffect(() => {
-    if (!map || !L) return
+    if (!map || !L) return;
 
-    const safeCameras = cameras || []
-    const safeAgents = agents || []
-    const safeVehicles = vehicles || []
+    const safeCameras = cameras || [];
+    const safeAgents = agents || [];
+    const safeVehicles = vehicles || [];
 
     // Clear existing markers
-    markersRef.current.forEach((marker) => marker.remove())
-    markersRef.current = []
+    markersRef.current.forEach((marker) => marker.remove());
+    markersRef.current = [];
 
     // Custom icons
     const cameraIcon = L.divIcon({
@@ -89,7 +101,7 @@ export function EventMap({ cameras, agents, vehicles, eventLocation }: EventMapP
       className: "custom-marker",
       iconSize: [32, 32],
       iconAnchor: [16, 16],
-    })
+    });
 
     const agentIcon = L.divIcon({
       html: `<div class="flex items-center justify-center w-8 h-8 rounded-full bg-accent border-2 border-background shadow-lg">
@@ -98,7 +110,7 @@ export function EventMap({ cameras, agents, vehicles, eventLocation }: EventMapP
       className: "custom-marker",
       iconSize: [32, 32],
       iconAnchor: [16, 16],
-    })
+    });
 
     const vehicleIcon = L.divIcon({
       html: `<div class="flex items-center justify-center w-8 h-8 rounded-full bg-chart-4 border-2 border-background shadow-lg">
@@ -107,99 +119,115 @@ export function EventMap({ cameras, agents, vehicles, eventLocation }: EventMapP
       className: "custom-marker",
       iconSize: [32, 32],
       iconAnchor: [16, 16],
-    })
+    });
 
     // Add camera markers
     safeCameras.forEach((camera) => {
-      const marker = L.marker([camera.location.lat, camera.location.lng], { icon: cameraIcon })
-        .bindPopup(`
+      const marker = L.marker([camera.location.lat, camera.location.lng], {
+        icon: cameraIcon,
+      })
+        .bindPopup(
+          `
           <div class="p-2">
             <p class="font-semibold text-sm">${camera.name}</p>
-            <p class="text-xs text-muted-foreground mt-1">Status: ${camera.status === "online" ? "Online" : "Offline"}</p>
+            <p class="text-xs text-muted-foreground mt-1">Status: ${
+              camera.status === "online" ? "Online" : "Offline"
+            }</p>
           </div>
-        `)
-        .addTo(map)
+        `
+        )
+        .addTo(map);
 
-      markersRef.current.push(marker)
-    })
+      markersRef.current.push(marker);
+    });
 
     // Add agent markers
     safeAgents.forEach((agent) => {
-      const marker = L.marker([agent.location.lat, agent.location.lng], { icon: agentIcon })
-        .bindPopup(`
+      const marker = L.marker([agent.location.lat, agent.location.lng], {
+        icon: agentIcon,
+      })
+        .bindPopup(
+          `
           <div class="p-2">
             <p class="font-semibold text-sm">${agent.name}</p>
             <p class="text-xs text-muted-foreground">Badge: ${agent.badge}</p>
             <p class="text-xs text-muted-foreground">Status: ${agent.status}</p>
           </div>
-        `)
-        .addTo(map)
+        `
+        )
+        .addTo(map);
 
-      markersRef.current.push(marker)
-    })
+      markersRef.current.push(marker);
+    });
 
     // Add vehicle markers
     safeVehicles.forEach((vehicle) => {
-      const marker = L.marker([vehicle.location.lat, vehicle.location.lng], { icon: vehicleIcon })
-        .bindPopup(`
+      const marker = L.marker([vehicle.location.lat, vehicle.location.lng], {
+        icon: vehicleIcon,
+      })
+        .bindPopup(
+          `
           <div class="p-2">
             <p class="font-semibold text-sm">${vehicle.plate}</p>
             <p class="text-xs text-muted-foreground">Tipo: ${vehicle.type}</p>
             <p class="text-xs text-muted-foreground">Status: ${vehicle.status}</p>
           </div>
-        `)
-        .addTo(map)
+        `
+        )
+        .addTo(map);
 
-      markersRef.current.push(marker)
-    })
+      markersRef.current.push(marker);
+    });
 
     if (markersRef.current.length > 0) {
-      const group = L.featureGroup(markersRef.current)
-      map.fitBounds(group.getBounds().pad(0.2), { maxZoom: 15 })
+      const group = L.featureGroup(markersRef.current);
+      map.fitBounds(group.getBounds().pad(0.2), { maxZoom: 15 });
     }
-  }, [map, L, cameras, agents, vehicles])
+  }, [map, L, cameras, agents, vehicles]);
 
   // Efeito específico para lidar com mudanças de tamanho/tela cheia
   useEffect(() => {
-    if (!map) return
+    if (!map || !L) return;
 
-    // Função para invalidar o tamanho do mapa
+    // Usa requestAnimationFrame para garantir que o DOM foi atualizado
     const invalidateMapSize = () => {
-      setTimeout(() => {
-        map.invalidateSize(true)
-        // Força um redesenho adicional
-        setTimeout(() => {
-          map.invalidateSize(true)
-          // Centraliza o mapa novamente após o redimensionamento
-          if (markersRef.current.length > 0 && L) {
-            const group = L.featureGroup(markersRef.current)
-            map.fitBounds(group.getBounds().pad(0.2), { maxZoom: 15 })
-          }
-        }, 150)
-      }, 50)
-    }
+      requestAnimationFrame(() => {
+        map.invalidateSize(true);
 
-    invalidateMapSize()
+        // Segundo ajuste após uma pequena espera
+        setTimeout(() => {
+          map.invalidateSize(true);
+
+          // Reajusta os bounds se houver marcadores
+          if (markersRef.current.length > 0) {
+            const group = L.featureGroup(markersRef.current);
+            map.fitBounds(group.getBounds().pad(0.2), { maxZoom: 15 });
+          }
+        }, 100);
+      });
+    };
+
+    invalidateMapSize();
 
     // Adiciona listener para redimensionamento da janela
     const handleResize = () => {
-      invalidateMapSize()
-    }
+      invalidateMapSize();
+    };
 
-    window.addEventListener('resize', handleResize)
+    window.addEventListener("resize", handleResize);
 
     return () => {
-      window.removeEventListener('resize', handleResize)
-    }
-  }, [map, isFullscreen, L]) // Adicionamos isFullscreen como dependência
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [map, L]); // Adicionamos isFullscreen como dependência
 
   const toggleFullscreen = () => {
-    setIsFullscreen(!isFullscreen)
-  }
+    setIsFullscreen(!isFullscreen);
+  };
 
-  const cameraCount = cameras?.length || 0
-  const agentCount = agents?.length || 0
-  const vehicleCount = vehicles?.length || 0
+  const cameraCount = cameras?.length || 0;
+  const agentCount = agents?.length || 0;
+  const vehicleCount = vehicles?.length || 0;
 
   return (
     <Card className={isFullscreen ? "fixed inset-4 z-50 bg-background" : ""}>
@@ -209,19 +237,6 @@ export function EventMap({ cameras, agents, vehicles, eventLocation }: EventMapP
             <MapPin className="h-5 w-5 text-primary" />
             Mapa do Evento - {eventLocation}
           </CardTitle>
-          <Button variant="outline" size="sm" onClick={toggleFullscreen} className="gap-2 bg-transparent">
-            {isFullscreen ? (
-              <>
-                <Minimize2 className="h-4 w-4" />
-                Minimizar
-              </>
-            ) : (
-              <>
-                <Maximize2 className="h-4 w-4" />
-                Tela cheia
-              </>
-            )}
-          </Button>
         </div>
         <div className="flex flex-wrap gap-3 pt-2">
           <Badge variant="outline" className="gap-1.5">
@@ -253,5 +268,5 @@ export function EventMap({ cameras, agents, vehicles, eventLocation }: EventMapP
         )}
       </CardContent>
     </Card>
-  )
+  );
 }

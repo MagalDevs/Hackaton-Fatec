@@ -1,9 +1,9 @@
-import type { Event } from "@/lib/types"
-import { Card, CardContent } from "@/components/ui/card"
-import { Users, Video, Car, UserCheck } from "lucide-react"
+import type { Event } from "@/lib/types";
+import { Card, CardContent } from "@/components/ui/card";
+import { Users, Video, Car, UserCheck } from "lucide-react";
 
 interface EventStatsProps {
-  event: Event
+  event: Event;
 }
 
 export function EventStats({ event }: EventStatsProps) {
@@ -12,7 +12,7 @@ export function EventStats({ event }: EventStatsProps) {
       label: "Público Estimado",
       value: event.attendees.toLocaleString("pt-BR"),
       icon: Users,
-      color: "text-primary",
+      color: "white",
     },
     {
       label: "Agentes Designados",
@@ -32,7 +32,7 @@ export function EventStats({ event }: EventStatsProps) {
       icon: Car,
       color: "text-chart-4",
     },
-  ]
+  ];
 
   return (
     <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
@@ -42,7 +42,9 @@ export function EventStats({ event }: EventStatsProps) {
             <div className="flex items-center justify-between">
               <div className="space-y-1">
                 <p className="text-sm text-muted-foreground">{stat.label}</p>
-                <p className="text-3xl font-bold text-foreground">{stat.value}</p>
+                <p className="text-3xl font-bold text-foreground">
+                  {stat.value}
+                </p>
               </div>
               <stat.icon className={`h-8 w-8 ${stat.color}`} />
             </div>
@@ -50,5 +52,5 @@ export function EventStats({ event }: EventStatsProps) {
         </Card>
       ))}
     </div>
-  )
+  );
 }

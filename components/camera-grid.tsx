@@ -1,37 +1,42 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import type { Camera } from "@/lib/types"
-import { CameraFeed } from "@/components/camera-feed"
-import { Button } from "@/components/ui/button"
-import { Grid3x3, Grid2x2, Maximize2 } from "lucide-react"
+import { useState } from "react";
+import type { Camera } from "@/lib/types";
+import { CameraFeed } from "@/components/camera-feed";
+import { Button } from "@/components/ui/button";
+import { Grid3x3, Grid2x2, Maximize2 } from "lucide-react";
 
 interface CameraGridProps {
-  cameras: Camera[]
-  eventId: string
+  cameras: Camera[];
+  eventId: string;
+  searchQuery?: string;
 }
 
-export function CameraGrid({ cameras, eventId }: CameraGridProps) {
-  const [gridLayout, setGridLayout] = useState<"2x2" | "3x3" | "4x4">("2x2")
-  const [selectedCamera, setSelectedCamera] = useState<string | null>(null)
+export function CameraGrid({ cameras, eventId, searchQuery }: CameraGridProps) {
+  const [gridLayout, setGridLayout] = useState<"2x2" | "3x3" | "4x4">("2x2");
+  const [selectedCamera, setSelectedCamera] = useState<string | null>(null);
 
   const gridClasses = {
     "2x2": "grid-cols-1 md:grid-cols-2",
     "3x3": "grid-cols-1 md:grid-cols-2 lg:grid-cols-3",
     "4x4": "grid-cols-1 md:grid-cols-2 lg:grid-cols-4",
-  }
+  };
 
   if (selectedCamera) {
-    const camera = cameras.find((c) => c.id === selectedCamera)
+    const camera = cameras.find((c) => c.id === selectedCamera);
     if (camera) {
       return (
         <div className="space-y-4">
-          <Button variant="outline" onClick={() => setSelectedCamera(null)} className="gap-2">
+          <Button
+            variant="outline"
+            onClick={() => setSelectedCamera(null)}
+            className="gap-2"
+          >
             Voltar para grade
           </Button>
           <CameraFeed camera={camera} isFullscreen={true} />
         </div>
-      )
+      );
     }
   }
 
@@ -71,21 +76,25 @@ export function CameraGrid({ cameras, eventId }: CameraGridProps) {
       </div>
 
       <div className={`grid gap-4 ${gridClasses[gridLayout]}`}>
-        {cameras.map((camera) => (
-          <div key={camera.id} className="relative group">
-            <CameraFeed camera={camera} />
-            <Button
-              variant="secondary"
-              size="sm"
-              className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity gap-2"
-              onClick={() => setSelectedCamera(camera.id)}
-            >
-              <Maximize2 className="h-4 w-4" />
-              Expandir
-            </Button>
-          </div>
-        ))}
+        {cameras
+          .filter((camera) =>
+            camera.name.toLowerCase().includes(searchQuery?.toLowerCase() || "")
+          )
+          .map((camera) => (
+            <div key={camera.id} className="relative group">
+              <CameraFeed camera={camera} />
+              <Button
+                variant="secondary"
+                size="sm"
+                className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity gap-2"
+                onClick={() => setSelectedCamera(camera.id)}
+              >
+                <Maximize2 className="h-4 w-4" />
+                Expandir
+              </Button>
+            </div>
+          ))}
       </div>
     </div>
-  )
+  );
 }

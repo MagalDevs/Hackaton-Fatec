@@ -1,38 +1,38 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import type { Camera } from "@/lib/types"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
-import { Video, VideoOff, Circle, Play, Pause, RotateCw } from "lucide-react"
+import { useState } from "react";
+import type { Camera } from "@/lib/types";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Video, VideoOff, Circle, Play, Pause, RotateCw } from "lucide-react";
 
 interface CameraFeedProps {
-  camera: Camera
-  isFullscreen?: boolean
+  camera: Camera;
+  isFullscreen?: boolean;
 }
 
 export function CameraFeed({ camera, isFullscreen = false }: CameraFeedProps) {
-  const [isPlaying, setIsPlaying] = useState(true)
-  const [isRecording, setIsRecording] = useState(false)
+  const [isPlaying, setIsPlaying] = useState(true);
+  const [isRecording, setIsRecording] = useState(false);
 
   const cameraTypeLabels = {
     drone: "Drone",
     street: "Câmera de Rua",
     pole: "Câmera de Poste",
-  }
+  };
 
   const statusColors = {
     online: "bg-chart-4 text-chart-4",
     offline: "bg-destructive text-destructive",
     maintenance: "bg-accent text-accent",
-  }
+  };
 
   const statusLabels = {
     online: "Online",
     offline: "Offline",
     maintenance: "Manutenção",
-  }
+  };
 
   return (
     <Card className={isFullscreen ? "h-[calc(100vh-16rem)]" : ""}>
@@ -40,11 +40,17 @@ export function CameraFeed({ camera, isFullscreen = false }: CameraFeedProps) {
         <div className="flex items-center justify-between">
           <div className="space-y-1">
             <CardTitle className="text-lg">{camera.name}</CardTitle>
-            <p className="text-sm text-muted-foreground">{cameraTypeLabels[camera.type]}</p>
+            <p className="text-sm text-muted-foreground">
+              {cameraTypeLabels[camera.type]}
+            </p>
           </div>
           <div className="flex items-center gap-2">
             <Badge variant="outline" className="gap-1.5">
-              <Circle className={`h-2 w-2 fill-current ${statusColors[camera.status]}`} />
+              <Circle
+                className={`h-2 w-2 fill-current ${
+                  statusColors[camera.status]
+                }`}
+              />
               {statusLabels[camera.status]}
             </Badge>
             {isRecording && (
@@ -67,9 +73,7 @@ export function CameraFeed({ camera, isFullscreen = false }: CameraFeedProps) {
             <>
               {/* Simulated camera feed with placeholder */}
               <img
-                src={`/.jpg?height=720&width=1280&query=${encodeURIComponent(
-                  `security camera view ${camera.type} monitoring`,
-                )}`}
+                src={camera.streamUrl}
                 alt={camera.name}
                 className="w-full h-full object-cover"
               />
@@ -89,7 +93,9 @@ export function CameraFeed({ camera, isFullscreen = false }: CameraFeedProps) {
                 <div className="absolute top-4 right-4">
                   <div className="bg-destructive/90 backdrop-blur-sm px-3 py-1.5 rounded-md flex items-center gap-2">
                     <Circle className="h-3 w-3 fill-current text-destructive-foreground animate-pulse" />
-                    <span className="text-xs font-semibold text-destructive-foreground">GRAVANDO</span>
+                    <span className="text-xs font-semibold text-destructive-foreground">
+                      GRAVANDO
+                    </span>
                   </div>
                 </div>
               )}
@@ -108,7 +114,9 @@ export function CameraFeed({ camera, isFullscreen = false }: CameraFeedProps) {
               <div className="text-center space-y-3">
                 <VideoOff className="h-12 w-12 text-muted-foreground mx-auto" />
                 <p className="text-sm text-muted-foreground">
-                  {camera.status === "offline" ? "Câmera offline" : "Câmera em manutenção"}
+                  {camera.status === "offline"
+                    ? "Câmera offline"
+                    : "Câmera em manutenção"}
                 </p>
               </div>
             </div>
@@ -119,7 +127,12 @@ export function CameraFeed({ camera, isFullscreen = false }: CameraFeedProps) {
         {camera.status === "online" && (
           <div className="flex items-center justify-between gap-4">
             <div className="flex items-center gap-2">
-              <Button variant="outline" size="sm" onClick={() => setIsPlaying(!isPlaying)} className="gap-2">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setIsPlaying(!isPlaying)}
+                className="gap-2"
+              >
                 {isPlaying ? (
                   <>
                     <Pause className="h-4 w-4" />
@@ -132,7 +145,11 @@ export function CameraFeed({ camera, isFullscreen = false }: CameraFeedProps) {
                   </>
                 )}
               </Button>
-              <Button variant="outline" size="sm" className="gap-2 bg-transparent">
+              <Button
+                variant="outline"
+                size="sm"
+                className="gap-2 bg-transparent"
+              >
                 <RotateCw className="h-4 w-4" />
                 Atualizar
               </Button>
@@ -151,9 +168,10 @@ export function CameraFeed({ camera, isFullscreen = false }: CameraFeedProps) {
 
         {/* Camera Location Info */}
         <div className="text-xs text-muted-foreground font-mono">
-          Localização: {camera.location.lat.toFixed(6)}, {camera.location.lng.toFixed(6)}
+          Localização: {camera.location.lat.toFixed(6)},{" "}
+          {camera.location.lng.toFixed(6)}
         </div>
       </CardContent>
     </Card>
-  )
+  );
 }

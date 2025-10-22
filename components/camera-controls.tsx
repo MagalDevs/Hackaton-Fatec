@@ -1,20 +1,38 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Card, CardContent } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
-import { Input } from "@/components/ui/input"
-import { Video, Search, Filter, Download, Settings, MonitorPlay } from "lucide-react"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { useState } from "react";
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Input } from "@/components/ui/input";
+import {
+  Video,
+  Search,
+  Filter,
+  Download,
+  Settings,
+  MonitorPlay,
+} from "lucide-react";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 interface CameraControlsProps {
-  totalCameras: number
+  totalCameras: number;
+  searchQuery: string;
+  setSearchQuery: (query: string) => void;
 }
 
-export function CameraControls({ totalCameras }: CameraControlsProps) {
-  const [searchQuery, setSearchQuery] = useState("")
-  const [filterType, setFilterType] = useState<string>("all")
+export function CameraControls({
+  totalCameras,
+  searchQuery,
+  setSearchQuery,
+}: CameraControlsProps) {
+  const [filterType, setFilterType] = useState<string>("all");
 
   return (
     <Card>
@@ -27,7 +45,9 @@ export function CameraControls({ totalCameras }: CameraControlsProps) {
               </div>
               <div>
                 <h2 className="text-xl font-bold">Central de Câmeras</h2>
-                <p className="text-sm text-muted-foreground">Monitoramento em tempo real</p>
+                <p className="text-sm text-muted-foreground">
+                  Monitoramento em tempo real
+                </p>
               </div>
             </div>
             <Badge variant="outline" className="gap-2">
@@ -61,11 +81,19 @@ export function CameraControls({ totalCameras }: CameraControlsProps) {
             </Select>
 
             <div className="flex gap-2">
-              <Button variant="outline" size="sm" className="gap-2 bg-transparent">
+              <Button
+                variant="outline"
+                size="sm"
+                className="gap-2 bg-transparent"
+              >
                 <Download className="h-4 w-4" />
                 Exportar
               </Button>
-              <Button variant="outline" size="sm" className="gap-2 bg-transparent">
+              <Button
+                variant="outline"
+                size="sm"
+                className="gap-2 bg-transparent"
+              >
                 <Settings className="h-4 w-4" />
                 Configurar
               </Button>
@@ -74,5 +102,5 @@ export function CameraControls({ totalCameras }: CameraControlsProps) {
         </div>
       </CardContent>
     </Card>
-  )
+  );
 }
