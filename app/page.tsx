@@ -1,12 +1,16 @@
-import { mockEvents } from "@/lib/mock-data"
-import { EventCard } from "@/components/event-card"
-import { Badge } from "@/components/ui/badge"
-import { Shield, Calendar, Activity } from "lucide-react"
+import { mockEvents } from "@/lib/mock-data";
+import { EventCard } from "@/components/event-card";
+import { Badge } from "@/components/ui/badge";
+import { Shield, Calendar, Activity } from "lucide-react";
+import Image from "next/image";
 
 export default function HomePage() {
-  const activeEvents = mockEvents.filter((e) => e.status === "active")
-  const scheduledEvents = mockEvents.filter((e) => e.status === "scheduled")
-  const currentMonth = new Date().toLocaleDateString("pt-BR", { month: "long", year: "numeric" })
+  const activeEvents = mockEvents.filter((e) => e.status === "active");
+  const scheduledEvents = mockEvents.filter((e) => e.status === "scheduled");
+  const currentMonth = new Date().toLocaleDateString("pt-BR", {
+    month: "long",
+    year: "numeric",
+  });
 
   return (
     <div className="min-h-screen bg-background">
@@ -15,13 +19,19 @@ export default function HomePage() {
         <div className="container mx-auto px-4 py-6">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="flex items-center justify-center w-12 h-12 rounded-lg bg-primary">
+              {/* <div className="flex items-center justify-center w-12 h-12 rounded-lg bg-primary">
                 <Shield className="h-7 w-7 text-primary-foreground" />
               </div>
               <div>
                 <h1 className="text-2xl font-bold text-foreground">Sistema de Monitoramento</h1>
                 <p className="text-sm text-muted-foreground">Guarda Civil Municipal</p>
-              </div>
+              </div> */}
+              <Image
+                src="/same.png"
+                alt="Logo do Sistema de Monitoramento"
+                width={300}
+                height={150}
+              />
             </div>
             <div className="flex items-center gap-2">
               <Badge variant="outline" className="text-sm">
@@ -47,7 +57,9 @@ export default function HomePage() {
             <section className="space-y-4">
               <div className="flex items-center gap-2">
                 <h3 className="text-xl font-semibold">Eventos em Andamento</h3>
-                <Badge className="bg-accent text-accent-foreground">{activeEvents.length}</Badge>
+                <Badge className="bg-accent text-accent-foreground">
+                  {activeEvents.length}
+                </Badge>
               </div>
               <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
                 {activeEvents.map((event) => (
@@ -72,5 +84,5 @@ export default function HomePage() {
         </div>
       </main>
     </div>
-  )
+  );
 }
