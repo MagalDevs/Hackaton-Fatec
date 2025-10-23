@@ -49,50 +49,50 @@ export function TrackingPanel({ agents, vehicles }: TrackingPanelProps) {
   return (
     <Card className="h-full">
       <CardHeader>
-        <CardTitle className="text-lg">Recursos em Campo</CardTitle>
+        <CardTitle className="text-base sm:text-lg">Recursos em Campo</CardTitle>
         <div className="relative pt-2">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
           <Input
             placeholder="Buscar..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="pl-10"
+            className="pl-10 text-sm"
           />
         </div>
       </CardHeader>
       <CardContent>
         <Tabs defaultValue="agents" className="w-full">
           <TabsList className="grid w-full grid-cols-2">
-            <TabsTrigger value="agents" className="gap-2">
+            <TabsTrigger value="agents" className="gap-1 sm:gap-2 text-xs sm:text-sm">
               <Users className="h-4 w-4" />
-              Agentes
-              <Badge variant="secondary" className="ml-1">
+              <span className="hidden sm:inline">Agentes</span>
+              <Badge variant="secondary" className="ml-1 text-xs">
                 {activeAgents}
               </Badge>
             </TabsTrigger>
-            <TabsTrigger value="vehicles" className="gap-2">
+            <TabsTrigger value="vehicles" className="gap-1 sm:gap-2 text-xs sm:text-sm">
               <Car className="h-4 w-4" />
-              Viaturas
-              <Badge variant="secondary" className="ml-1">
+              <span className="hidden sm:inline">Viaturas</span>
+              <Badge variant="secondary" className="ml-1 text-xs">
                 {activeVehicles}
               </Badge>
             </TabsTrigger>
           </TabsList>
 
           <TabsContent value="agents" className="mt-4">
-            <ScrollArea className="h-[500px] pr-4">
+            <ScrollArea className="h-[400px] sm:h-[500px] pr-4">
               <div className="space-y-3">
                 {filteredAgents.map((agent) => (
                   <Card key={agent.id} className="border-l-4 border-l-accent">
-                    <CardContent className="p-4">
-                      <div className="space-y-3">
+                    <CardContent className="p-3 sm:p-4">
+                      <div className="space-y-2 sm:space-y-3">
                         <div className="flex items-start justify-between">
                           <div>
-                            <p className="font-semibold text-foreground">{agent.name}</p>
-                            <p className="text-sm text-muted-foreground">{agent.badge}</p>
+                            <p className="text-sm sm:text-base font-semibold text-foreground">{agent.name}</p>
+                            <p className="text-xs sm:text-sm text-muted-foreground">{agent.badge}</p>
                           </div>
                           <div className="flex items-center gap-1.5">
-                            <Circle className={`h-2 w-2 fill-current ${statusColors[agent.status]}`} />
+                            <Circle className={`h-2 w-2 fill-current ${statusColors[agent.status]} shrink-0`} />
                             <span className="text-xs text-muted-foreground capitalize">
                               {statusLabels[agent.status]}
                             </span>
@@ -101,13 +101,13 @@ export function TrackingPanel({ agents, vehicles }: TrackingPanelProps) {
 
                         <div className="space-y-2 text-xs">
                           <div className="flex items-center gap-2 text-muted-foreground">
-                            <MapPin className="h-3 w-3" />
-                            <span className="font-mono">
+                            <MapPin className="h-3 w-3 shrink-0" />
+                            <span className="font-mono text-[10px] sm:text-xs">
                               {agent.location.lat.toFixed(4)}, {agent.location.lng.toFixed(4)}
                             </span>
                           </div>
                           <div className="flex items-center gap-2 text-muted-foreground">
-                            <Clock className="h-3 w-3" />
+                            <Clock className="h-3 w-3 shrink-0" />
                             <span>Atualizado {new Date(agent.lastUpdate).toLocaleTimeString("pt-BR")}</span>
                           </div>
                         </div>
@@ -120,19 +120,19 @@ export function TrackingPanel({ agents, vehicles }: TrackingPanelProps) {
           </TabsContent>
 
           <TabsContent value="vehicles" className="mt-4">
-            <ScrollArea className="h-[500px] pr-4">
+            <ScrollArea className="h-[400px] sm:h-[500px] pr-4">
               <div className="space-y-3">
                 {filteredVehicles.map((vehicle) => (
                   <Card key={vehicle.id} className="border-l-4 border-l-chart-4">
-                    <CardContent className="p-4">
-                      <div className="space-y-3">
+                    <CardContent className="p-3 sm:p-4">
+                      <div className="space-y-2 sm:space-y-3">
                         <div className="flex items-start justify-between">
                           <div>
-                            <p className="font-semibold text-foreground">{vehicle.plate}</p>
-                            <p className="text-sm text-muted-foreground capitalize">{vehicle.type}</p>
+                            <p className="text-sm sm:text-base font-semibold text-foreground">{vehicle.plate}</p>
+                            <p className="text-xs sm:text-sm text-muted-foreground capitalize">{vehicle.type}</p>
                           </div>
                           <div className="flex items-center gap-1.5">
-                            <Circle className={`h-2 w-2 fill-current ${statusColors[vehicle.status]}`} />
+                            <Circle className={`h-2 w-2 fill-current ${statusColors[vehicle.status]} shrink-0`} />
                             <span className="text-xs text-muted-foreground capitalize">
                               {statusLabels[vehicle.status]}
                             </span>
@@ -141,17 +141,17 @@ export function TrackingPanel({ agents, vehicles }: TrackingPanelProps) {
 
                         <div className="space-y-2 text-xs">
                           <div className="flex items-center gap-2 text-muted-foreground">
-                            <Users className="h-3 w-3" />
+                            <Users className="h-3 w-3 shrink-0" />
                             <span>{vehicle.assignedAgents.length} agentes designados</span>
                           </div>
                           <div className="flex items-center gap-2 text-muted-foreground">
-                            <MapPin className="h-3 w-3" />
-                            <span className="font-mono">
+                            <MapPin className="h-3 w-3 shrink-0" />
+                            <span className="font-mono text-[10px] sm:text-xs">
                               {vehicle.location.lat.toFixed(4)}, {vehicle.location.lng.toFixed(4)}
                             </span>
                           </div>
                           <div className="flex items-center gap-2 text-muted-foreground">
-                            <Clock className="h-3 w-3" />
+                            <Clock className="h-3 w-3 shrink-0" />
                             <span>Atualizado {new Date(vehicle.lastUpdate).toLocaleTimeString("pt-BR")}</span>
                           </div>
                         </div>

@@ -23,9 +23,9 @@ export function StatisticsContent({ eventId, initialOccurrences }: StatisticsCon
   }
 
   return (
-    <main className="container mx-auto px-4 py-6 space-y-6">
-      <div className="grid gap-6 lg:grid-cols-3">
-        <div className="lg:col-span-2 space-y-6">
+    <main className="container mx-auto px-3 sm:px-4 py-4 sm:py-6 space-y-4 sm:space-y-6">
+      <div className="grid gap-4 sm:gap-6 lg:grid-cols-3">
+        <div className="lg:col-span-2 space-y-4 sm:space-y-6">
           <OccurrenceCharts occurrences={occurrences} />
           <OccurrenceList occurrences={occurrences} onToggleResolved={handleToggleResolved} />
         </div>

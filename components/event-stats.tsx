@@ -1,9 +1,9 @@
-import type { Event } from "@/lib/types";
-import { Card, CardContent } from "@/components/ui/card";
-import { Users, Video, Car, UserCheck } from "lucide-react";
+import type { Event } from "@/lib/types"
+import { Card, CardContent } from "@/components/ui/card"
+import { Users, Video, Car, UserCheck } from "lucide-react"
 
 interface EventStatsProps {
-  event: Event;
+  event: Event
 }
 
 export function EventStats({ event }: EventStatsProps) {
@@ -32,25 +32,23 @@ export function EventStats({ event }: EventStatsProps) {
       icon: Car,
       color: "text-chart-4",
     },
-  ];
+  ]
 
   return (
-    <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+    <div className="grid gap-4 grid-cols-2 lg:grid-cols-4">
       {stats.map((stat) => (
         <Card key={stat.label}>
-          <CardContent className="p-6">
+          <CardContent className="p-4 sm:p-6">
             <div className="flex items-center justify-between">
               <div className="space-y-1">
-                <p className="text-sm text-muted-foreground">{stat.label}</p>
-                <p className="text-3xl font-bold text-foreground">
-                  {stat.value}
-                </p>
+                <p className="text-xs sm:text-sm text-muted-foreground">{stat.label}</p>
+                <p className="text-2xl sm:text-3xl font-bold text-foreground">{stat.value}</p>
               </div>
-              <stat.icon className={`h-8 w-8 ${stat.color}`} />
+              <stat.icon className={`h-6 w-6 sm:h-8 sm:w-8 ${stat.color} shrink-0`} />
             </div>
           </CardContent>
         </Card>
       ))}
     </div>
-  );
+  )
 }

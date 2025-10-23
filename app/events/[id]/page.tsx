@@ -21,10 +21,10 @@ export default async function EventPage({ params }: EventPageProps) {
     <div className="min-h-screen bg-background">
       <EventHeader event={event} />
 
-      <main className="container mx-auto px-4 py-6 space-y-6">
+      <main className="container mx-auto px-3 sm:px-4 py-4 sm:py-6 space-y-4 sm:space-y-6">
         <EventStats event={event} />
 
-        <div className="grid gap-6 lg:grid-cols-3">
+        <div className="grid gap-4 sm:gap-6 lg:grid-cols-3">
           <div className="lg:col-span-2">
             <EventMap
               cameras={mockCameras}
@@ -34,7 +34,7 @@ export default async function EventPage({ params }: EventPageProps) {
             />
           </div>
 
-          <div className="space-y-6">
+          <div className="space-y-4 sm:space-y-6">
             <ResourceList title="Câmeras" items={mockCameras} type="camera" />
             <ResourceList title="Agentes" items={mockAgents} type="agent" />
             <ResourceList title="Viaturas" items={mockVehicles} type="vehicle" />
