@@ -53,3 +53,17 @@ export interface Vehicle {
   assignedAgents: string[]
   lastUpdate: string
 }
+
+export type OccurrenceType = "theft" | "robbery" | "accident" | "vandalism" | "disturbance" | "other"
+
+export interface Occurrence {
+  id: string
+  eventId: string
+  type: OccurrenceType
+  description: string
+  location: string
+  time: string
+  severity: "low" | "medium" | "high"
+  reportedBy: string
+  resolved: boolean
+}

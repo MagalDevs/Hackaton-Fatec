@@ -1,11 +1,10 @@
-import type { Event, Camera, Agent, Vehicle } from "./types";
+import type { Event, Camera, Agent, Vehicle, Occurrence } from "./types"
 
 export const mockEvents: Event[] = [
   {
     id: "1",
     name: "Festival de Música Centro",
-    description:
-      "Grande festival de música com público estimado de 50 mil pessoas",
+    description: "Grande festival de música com público estimado de 50 mil pessoas",
     location: "Praça Central",
     date: "2025-10-25",
     startTime: "18:00",
@@ -50,8 +49,7 @@ export const mockEvents: Event[] = [
   {
     id: "4",
     name: "Desfile Cívico",
-    description:
-      "Desfile comemorativo com participação de escolas e instituições",
+    description: "Desfile comemorativo com participação de escolas e instituições",
     location: "Avenida Principal",
     date: "2025-10-30",
     startTime: "09:00",
@@ -78,7 +76,7 @@ export const mockEvents: Event[] = [
     cameras: 20,
     vehicles: 15,
   },
-];
+]
 
 export const mockCameras: Camera[] = [
   {
@@ -87,8 +85,7 @@ export const mockCameras: Camera[] = [
     type: "drone",
     status: "online",
     location: { lat: -23.5505, lng: -46.6333 },
-    streamUrl:
-      "https://www.indaiatuba.sp.gov.br/comunicacao/imprensa/fotos/img_1159.jpg",
+    streamUrl: "https://www.indaiatuba.sp.gov.br/comunicacao/imprensa/fotos/img_1159.jpg",
   },
   {
     id: "cam-2",
@@ -105,8 +102,7 @@ export const mockCameras: Camera[] = [
     type: "street",
     status: "online",
     location: { lat: -23.55, lng: -46.633 },
-    streamUrl:
-      "https://gc.indaiatuba.sp.gov.br/images/img_top/cameracidada.jpg",
+    streamUrl: "https://gc.indaiatuba.sp.gov.br/images/img_top/cameracidada.jpg",
   },
   {
     id: "cam-4",
@@ -114,8 +110,7 @@ export const mockCameras: Camera[] = [
     type: "street",
     status: "online",
     location: { lat: -23.552, lng: -46.635 },
-    streamUrl:
-      "https://cotia.sp.gov.br/wp-content/uploads/2023/04/IMG_3246-scaled.jpg",
+    streamUrl: "https://cotia.sp.gov.br/wp-content/uploads/2023/04/IMG_3246-scaled.jpg",
   },
   {
     id: "cam-5",
@@ -135,7 +130,7 @@ export const mockCameras: Camera[] = [
     streamUrl:
       "https://www.santos.sp.gov.br/static/files_www/styles/newspagemodal/public/field/image/camera_tole_2.jpg",
   },
-];
+]
 
 export const mockAgents: Agent[] = [
   {
@@ -170,7 +165,7 @@ export const mockAgents: Agent[] = [
     location: { lat: -23.5508, lng: -46.6335 },
     lastUpdate: "2025-10-21T14:25:00",
   },
-];
+]
 
 export const mockVehicles: Vehicle[] = [
   {
@@ -200,4 +195,62 @@ export const mockVehicles: Vehicle[] = [
     assignedAgents: ["agent-5"],
     lastUpdate: "2025-10-21T14:29:00",
   },
-];
+]
+
+export const mockOccurrences: Occurrence[] = [
+  {
+    id: "occ-1",
+    eventId: "2",
+    type: "theft",
+    description: "Furto de celular próximo à entrada norte",
+    location: "Portão Norte - Setor A",
+    time: "2025-10-22T16:45:00",
+    severity: "medium",
+    reportedBy: "GC-1001",
+    resolved: true,
+  },
+  {
+    id: "occ-2",
+    eventId: "2",
+    type: "disturbance",
+    description: "Briga entre torcedores",
+    location: "Arquibancada Leste",
+    time: "2025-10-22T17:20:00",
+    severity: "high",
+    reportedBy: "GC-1003",
+    resolved: true,
+  },
+  {
+    id: "occ-3",
+    eventId: "2",
+    type: "accident",
+    description: "Pessoa desmaiada, atendimento médico solicitado",
+    location: "Setor B - Cadeira 145",
+    time: "2025-10-22T17:50:00",
+    severity: "high",
+    reportedBy: "GC-1005",
+    resolved: true,
+  },
+  {
+    id: "occ-4",
+    eventId: "2",
+    type: "theft",
+    description: "Tentativa de furto de veículo no estacionamento",
+    location: "Estacionamento Sul",
+    time: "2025-10-22T18:10:00",
+    severity: "medium",
+    reportedBy: "GC-1008",
+    resolved: false,
+  },
+  {
+    id: "occ-5",
+    eventId: "2",
+    type: "vandalism",
+    description: "Dano ao patrimônio público - banheiro",
+    location: "Banheiro Masculino - Setor C",
+    time: "2025-10-22T18:30:00",
+    severity: "low",
+    reportedBy: "GC-1002",
+    resolved: false,
+  },
+]

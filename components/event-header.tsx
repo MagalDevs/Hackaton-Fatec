@@ -3,7 +3,7 @@
 import type { Event } from "@/lib/types"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { ArrowLeft, Calendar, Clock, MapPin, AlertCircle, Video, Radio } from "lucide-react"
+import { ArrowLeft, Calendar, Clock, MapPin, AlertCircle, Video, Radio, BarChart3 } from "lucide-react"
 import { useRouter, usePathname } from "next/navigation"
 import Link from "next/link"
 
@@ -37,7 +37,8 @@ export function EventHeader({ event }: EventHeaderProps) {
   const pathname = usePathname()
   const isCamerasPage = pathname?.includes("/cameras")
   const isTrackingPage = pathname?.includes("/tracking")
-  const isOverviewPage = !isCamerasPage && !isTrackingPage
+  const isStatisticsPage = pathname?.includes("/statistics")
+  const isOverviewPage = !isCamerasPage && !isTrackingPage && !isStatisticsPage
 
   return (
     <header className="border-b border-border bg-card">
@@ -100,6 +101,12 @@ export function EventHeader({ event }: EventHeaderProps) {
               <Button variant={isTrackingPage ? "default" : "outline"} size="sm" className="gap-2">
                 <Radio className="h-4 w-4" />
                 Rastreamento
+              </Button>
+            </Link>
+            <Link href={`/events/${event.id}/statistics`}>
+              <Button variant={isStatisticsPage ? "default" : "outline"} size="sm" className="gap-2">
+                <BarChart3 className="h-4 w-4" />
+                Estatísticas
               </Button>
             </Link>
           </div>
